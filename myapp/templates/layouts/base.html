@@ -7,13 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>App</title>
 
-    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}?v=1">
 </head>
 <body>
 
     <nav class="navbar">
         <ul>
             <li><a href="{% url 'index' %}">Home</a></li>
+            <li><a href="{% url 'signup' %}">Signup</a></li>
             <li><a href="{% url 'projects' %}">Projects</a></li>
             <li><a href="{% url 'tasks' %}">Tasks</a></li>
             <li><a href="{% url 'create_task' %}">Add Task</a></li>
