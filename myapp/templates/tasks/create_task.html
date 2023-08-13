@@ -2,6 +2,8 @@
 {% block content %}
     <h2>Crear Tarea xd</h3>
 
+    {{error}}
+
     <form method="POST">
         {% csrf_token %}
         {{form.as_p}}

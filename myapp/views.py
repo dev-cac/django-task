@@ -1,11 +1,10 @@
-import re
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 
-from .forms import CreateNewTask, CreateNewProject
+from .forms import TaskForm, CreateNewProject
 from .models import Project, Task
 
 
@@ -75,14 +74,23 @@ def task(req, id):
 
 
 def createTask(req):
-    if req.method == "POST":
-        Task.objects.create(
-            name=req.POST["title"], description=req.POST["description"], project_id=5
-        )
+    error = ''
 
-        return redirect("tasks")
-    else:
-        return render(req, "tasks/create_task.html", {"form": CreateNewTask()})
+    if req.method == "POST":
+        try:
+            form = TaskForm(req.POST)
+            newTask = form.save(commit=False)
+            newTask.user = req.user
+
+            newTask.save()
+            return redirect("tasks")
+        except ValueError:
+            error = 'Valide la información proporcionada'
+
+    return render(req, "tasks/create_task.html", {
+        "form": TaskForm,
+        "error": error
+    })
 
 
 def createProject(req):

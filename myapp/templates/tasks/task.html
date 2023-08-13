@@ -6,7 +6,7 @@
         <div>{{task.description}}</div>
         <strong>{{task.project}}</strong> - 
 
-        {% if task.done == False %}
+        {% if task.important == False %}
             <span>Tarea Pendiente 💩</span>
         {% else %}
             <span>Tarea Realizada 🤠</span>
@@ -15,7 +15,7 @@
         <hr>
         <button>Delete</button>
 
-        {% if task.done == False %}
+        {% if task.important == False %}
             <button>✅ Done</button>
         {% endif %}
     </section>
