@@ -1,7 +1,8 @@
+import re
 from django.shortcuts import get_object_or_404, render, redirect
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from django.contrib.auth import login
+from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 
 from .forms import CreateNewTask, CreateNewProject
@@ -33,6 +34,30 @@ def signup(req):
 
     return render(req, "signup.html", {"form": UserCreationForm, "error": error})
 
+def signout(req):
+    logout(req)
+    return redirect('index')
+
+def signin(req):
+    error = ""
+
+    if req.method == 'POST':
+        user = authenticate(
+            req,
+            username=req.POST['username'],
+            password=req.POST['password']
+        )
+
+        if user is None:
+            error = 'Usuario o Contraseña incorrectos'
+        else:
+            login(req, user)
+            return redirect('tasks')
+
+    return render(req, 'signin.html', {
+        'form': AuthenticationForm,
+        'error': error
+    })
 
 def projects(req):
     projects = list(Project.objects.values())
