@@ -1,18 +1,22 @@
 {% extends 'layouts/base.html' %}
 {% block content %}
 
-    <h1>Tasks</h1>
+    <div class="row mt-5">
+        <div class="col-md-6 offset-md-3">
+            <h1 class="text-center">Tasks</h1>
 
-    <ol>
-        {% for task in tasks %}
-            <li><a href="{% url 'task' id=task.id %}">
-                {% if task.important %}
-                    <strong>{{ task.name }}</strong>
-                {% else %}
-                    {{ task.name }}
-                {% endif %}
-            </a></li>
-        {% endfor %}
-    </ol>
+            <ul class="list-group">
+                {% for task in tasks %}
+                    <a href="{% url 'task' id=task.id %}" class="list-group-item">
+                        {% if task.important %}
+                            <strong class="fw-bold">{{ task.name }}</strong>
+                        {% else %}
+                            {{ task.name }}
+                        {% endif %}
+                    </a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 
 {% endblock content %}

@@ -7,18 +7,25 @@
 
                 <form class="card card-body mt-5 text-center" action="/signin/" method="POST">
                     <h1>Login</h1>
-                    {{ error }}
+
+                    {% if error %}
+                        <div class="alert alert-danger d-flex align-items-center" role="alert">
+                            <div>
+                                {{ error }}
+                            </div>
+                        </div>
+                    {% endif %}
             
                     {% csrf_token %}
 
                     <div class="mb-3">
                         <label for="username">Username:</label>
-                        <input type="text" placeholder="Ingrese su usuario" name="username" class="form-control">
+                        <input type="text" placeholder="Enter your username" name="username" class="form-control">
                     </div>
 
                     <div class="mb-3">
                         <label for="password">Password:</label>
-                        <input type="password" placeholder="Ingrese su contraseña" name="password" class="form-control">
+                        <input type="password" placeholder="Enter your password" name="password" class="form-control">
                     </div>
             
                     <button class="btn btn-primary">Signin</button>

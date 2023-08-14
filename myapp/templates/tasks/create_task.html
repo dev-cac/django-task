@@ -1,13 +1,27 @@
 {% extends 'layouts/base.html' %}
+
 {% block content %}
-    <h2>Crear Tarea xd</h3>
+    <main class="mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div>
 
-    {{error}}
+                    <h2 class="text-center">Add Task</h3>
 
-    <form method="POST">
-        {% csrf_token %}
-        {{form.as_p}}
+                    {{error}}
+                
+                    <form method="POST" class="card card-body">
+                        {% csrf_token %}
 
-        <button>Save</button>
-    </form>
+                        <div>
+                            {{form}}
+                        </div>
+                
+                        <button class="btn btn-primary mt-2">Save</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </main>
 {% endblock content %}

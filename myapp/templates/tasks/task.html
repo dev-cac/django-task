@@ -2,40 +2,43 @@
 {% block content %}
 
     <section>
-        <h1>{{task.name}}</h1>
-        <div>{{task.description}}</div>
-        <strong>{{task.project}}</strong> - 
+        <h1 class="text-center mt-2">{{task.name}}</h1>
+        <div class="text-center">{{task.description}}</div>
+        <p class="text-center">
+            <strong>{{task.project}}</strong> - 
 
-        {% if task.datecompleted == None %}
-            <span>Tarea Pendiente 💩</span>
-        {% else %}
-            <span>Tarea Realizada 🤠</span>
-        {% endif %}
+            {% if task.datecompleted == None %}
+                <span class="text-danger">Tarea Pendiente 💩</span>
+            {% else %}
+                <span class="text-info">Tarea Realizada 🤠</span>
+            {% endif %}
+        </p>
 
-        <hr>
-        {% if task.datecompleted == None %}
-            <form action="{% url 'complete_task' id=task.id %}" method="POST">
+        <div class="mt-4 d-flex align-items-center justify-content-center">
+            {% if task.datecompleted == None %}
+                <form class="d-inline" action="{% url 'complete_task' id=task.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-info">Done</button>
+                </form>
+            {% endif %}
+
+            <form class="d-inline" action="{% url 'delete_task' id=task.id %}" method="POST">
                 {% csrf_token %}
-                <button>✅ Done</button>
+                <button class="btn btn-danger">Delete</button>
             </form>
-        {% endif %}
-
-        <form action="{% url 'delete_task' id=task.id %}" method="POST">
-            {% csrf_token %}
-            <button>❌ Delete</button>
-        </form>
+        </div>
     </section>
-
-    <br><br><br>
+    
+    <hr>
 
     <section>
         {{error}}
 
-        <form method="POST">
+        <form method="POST" class="card card-body">
             {% csrf_token %}
-            {{form.as_p}}
+            {{form}}
 
-            <button>Edit</button>
+            <button class="btn btn-secondary">Edit</button>
         </form>
     </section>
 

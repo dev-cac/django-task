@@ -6,24 +6,31 @@
             <div class="col-md-6 offset-md-3">
 
                 <form class="card card-body mt-5 text-center" action="/signup/" method="POST">
-                    <h1>Registro</h1>
-                    {{ error }}
+                    <h1>Register</h1>
+
+                    {% if error %}
+                        <div class="alert alert-danger d-flex align-items-center" role="alert">
+                            <div>
+                                {{ error }}
+                            </div>
+                        </div>
+                    {% endif %}
             
                     {% csrf_token %}
 
                     <div class="mb-3">
                         <label for="username">Username:</label>
-                        <input type="text" placeholder="Ingrese su usuario" name="username" class="form-control">
+                        <input type="text" placeholder="Enter your username" name="username" class="form-control">
                     </div>
 
                     <div class="mb-3">
                         <label for="password1">Password:</label>
-                        <input type="password" placeholder="Ingrese su contraseña" name="password1" class="form-control">
+                        <input type="password" placeholder="Enter your password" name="password1" class="form-control">
                     </div>
 
                     <div class="mb-3">
                         <label for="password2">Password confirmation:</label>
-                        <input type="password" placeholder="Repita su contraseña" name="password2" class="form-control">
+                        <input type="password" placeholder="Confirm your password" name="password2" class="form-control">
                     </div>
             
                     <button class="btn btn-primary">Signup</button>

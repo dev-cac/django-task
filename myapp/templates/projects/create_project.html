@@ -1,11 +1,15 @@
 {% extends 'layouts/base.html' %}
 {% block content %}
-    <h2>Crear Proyecto</h3>
+    <main class="mt-5">
+        <h2 class="text-center">Add Project</h3>
 
-    <form method="POST">
-        {% csrf_token %}
-        {{form.as_p}}
-
-        <button>Save</button>
-    </form>
+        <form class="card card-body" method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+    
+            <div>
+                <button class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </main>
 {% endblock content %}

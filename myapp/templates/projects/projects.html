@@ -1,10 +1,16 @@
 {% extends 'layouts/base.html' %}
 {% block content %}
 
-    <h1>Projects</h1>
+    <main class="mt-5">
+        <h1 class="mb-4 text-center">Projects</h1>
 
-    {% for project in projects %}
-        <div>{{ project.name }}</div>
-    {% endfor %}
+        <section class="row gap-1 flex align-items-center justify-content-center">
+            {% for project in projects %}
+                <div class="col-5 card flex align-items-center justify-content-center" style="height: 5rem;">
+                    {{ project.name }}
+                </div>
+            {% endfor %}
+        </section>
+    </main>
 
 {% endblock content %}
