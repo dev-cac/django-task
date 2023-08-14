@@ -6,18 +6,37 @@
         <div>{{task.description}}</div>
         <strong>{{task.project}}</strong> - 
 
-        {% if task.important == False %}
+        {% if task.datecompleted == None %}
             <span>Tarea Pendiente 💩</span>
         {% else %}
             <span>Tarea Realizada 🤠</span>
         {% endif %}
 
         <hr>
-        <button>Delete</button>
-
-        {% if task.important == False %}
-            <button>✅ Done</button>
+        {% if task.datecompleted == None %}
+            <form action="{% url 'complete_task' id=task.id %}" method="POST">
+                {% csrf_token %}
+                <button>✅ Done</button>
+            </form>
         {% endif %}
+
+        <form action="{% url 'delete_task' id=task.id %}" method="POST">
+            {% csrf_token %}
+            <button>❌ Delete</button>
+        </form>
+    </section>
+
+    <br><br><br>
+
+    <section>
+        {{error}}
+
+        <form method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+
+            <button>Edit</button>
+        </form>
     </section>
 
 {% endblock content %}

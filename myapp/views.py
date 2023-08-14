@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
+from django.utils import timezone
 
 from .forms import TaskForm, CreateNewProject
 from .models import Project, Task
@@ -64,14 +65,44 @@ def projects(req):
 
 
 def tasks(req):
-    tasks = list(Task.objects.values())
+    tasks = Task.objects.filter(user=req.user)
     return render(req, "tasks/tasks.html", {"tasks": tasks})
 
 
 def task(req, id):
-    task = get_object_or_404(Task, id=id)
-    return render(req, "tasks/task.html", {"task": task})
+    task = get_object_or_404(Task, id=id, user=req.user)
+    error = ''
 
+    if req.method == 'POST':
+        try:
+            newForm = TaskForm(req.POST, instance=task)
+            newForm.save()
+            return redirect('tasks')
+        except ValueError:
+            error = 'Valide la información proporcionada'
+
+    form = TaskForm(instance=task)
+
+    return render(req, "tasks/task.html", {
+        "task": task,
+        'form': form,
+        'error': error
+    })
+
+def completeTask(req, id):
+    task = get_object_or_404(Task, pk=id, user=req.user)
+
+    if req.method == 'POST':
+        task.datecompleted = timezone.now()
+        task.save()
+        return redirect('tasks')
+
+def deleteTask(req, id):
+    task = get_object_or_404(Task, pk=id, user=req.user)
+
+    if req.method == 'POST':
+        task.delete()
+        return redirect('tasks')
 
 def createTask(req):
     error = ''

@@ -5,7 +5,13 @@
 
     <ol>
         {% for task in tasks %}
-            <li><a href="{% url 'task' id=task.id %}">{{ task.name }}</a></li>
+            <li><a href="{% url 'task' id=task.id %}">
+                {% if task.important %}
+                    <strong>{{ task.name }}</strong>
+                {% else %}
+                    {{ task.name }}
+                {% endif %}
+            </a></li>
         {% endfor %}
     </ol>
 
