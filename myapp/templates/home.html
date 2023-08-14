@@ -1,5 +1,16 @@
 {% extends 'layouts/base.html' %}
 
 {% block content %}
-    <h1>Home</h1>
+    <div class="card card-body mt-5 p-5">
+        <h1 class="text-center mb-3">Task App</h1>
+    
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique, error quia doloremque inventore iusto assumenda asperiores necessitatibus ex reiciendis commodi numquam tempore hic libero ullam a consectetur! Suscipit, a eveniet magnam culpa reprehenderit ipsa distinctio iure illo porro voluptate odio, ullam delectus excepturi vel sed voluptatibus incidunt architecto alias voluptatem?</p>
+
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error at laborum maxime cupiditate a in harum blanditiis, deleniti aliquid, dignissimos amet. Adipisci illo soluta repellendus amet autem voluptatibus eum repudiandae, praesentium exercitationem sequi animi culpa asperiores non quae, corrupti debitis sed itaque. Velit exercitationem architecto laudantium mollitia. Perferendis, quasi optio, quia corrupti neque nam dolore, asperiores aliquam itaque id ab aliquid? Maiores libero eaque aliquid, optio cum soluta modi ipsa delectus est, numquam excepturi temporibus exercitationem quae nam itaque error dolore voluptates, minus rem? Distinctio, eaque ullam molestiae rerum blanditiis eveniet maxime quae. Voluptatum asperiores corrupti accusamus modi natus facilis.</p>
+
+       <div class="text-center">
+        <a href="{% url 'signin' %}" class="btn btn-primary">Signin</a>
+        <a href="{% url 'signup' %}" class="btn btn-dark">Signup</a>
+       </div>
+    </div>
 {% endblock %}
