@@ -1,7 +1,10 @@
 from django.shortcuts import get_object_or_404, render, redirect
+
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
+
 from django.db import IntegrityError
 from django.utils import timezone
 
@@ -34,10 +37,6 @@ def signup(req):
 
     return render(req, "signup.html", {"form": UserCreationForm, "error": error})
 
-def signout(req):
-    logout(req)
-    return redirect('index')
-
 def signin(req):
     error = ""
 
@@ -59,16 +58,22 @@ def signin(req):
         'error': error
     })
 
+@login_required
+def signout(req):
+    logout(req)
+    return redirect('index')
+
+@login_required
 def projects(req):
     projects = list(Project.objects.values())
     return render(req, "projects/projects.html", {"projects": projects})
 
-
+@login_required
 def tasks(req):
     tasks = Task.objects.filter(user=req.user)
     return render(req, "tasks/tasks.html", {"tasks": tasks})
 
-
+@login_required
 def task(req, id):
     task = get_object_or_404(Task, id=id, user=req.user)
     error = ''
@@ -89,6 +94,7 @@ def task(req, id):
         'error': error
     })
 
+@login_required
 def completeTask(req, id):
     task = get_object_or_404(Task, pk=id, user=req.user)
 
@@ -97,6 +103,7 @@ def completeTask(req, id):
         task.save()
         return redirect('tasks')
 
+@login_required
 def deleteTask(req, id):
     task = get_object_or_404(Task, pk=id, user=req.user)
 
@@ -104,6 +111,7 @@ def deleteTask(req, id):
         task.delete()
         return redirect('tasks')
 
+@login_required
 def createTask(req):
     error = ''
 
@@ -123,7 +131,7 @@ def createTask(req):
         "error": error
     })
 
-
+@login_required
 def createProject(req):
     if req.method == "POST":
         Project.objects.create(
